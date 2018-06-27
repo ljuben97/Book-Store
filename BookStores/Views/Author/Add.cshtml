@@ -1,0 +1,141 @@
+﻿@model BookStores.Models.NewAuthor
+@using BookStores.Models
+
+@{
+    ViewBag.Title = "Add an author";
+}
+
+@{
+    List<SelectListItem> listaDen = new List<SelectListItem>();
+    List<SelectListItem> listDenDeath = new List<SelectListItem>();
+    for (int i = 1; i <= 31; i++)
+    {
+        listaDen.Add(new SelectListItem() { Text = i.ToString(), Value = i.ToString() });
+        listDenDeath.Add(new SelectListItem() { Text = i.ToString(), Value = i.ToString() });
+    }
+
+    String[] meseci = new string[12];
+    meseci[0] = "January";
+    meseci[1] = "February";
+    meseci[2] = "March";
+    meseci[3] = "April";
+    meseci[4] = "May";
+    meseci[5] = "June";
+    meseci[6] = "July";
+    meseci[7] = "August";
+    meseci[8] = "September";
+    meseci[9] = "October";
+    meseci[10] = "November";
+    meseci[11] = "December";
+    List<SelectListItem> listaMeseci = new List<SelectListItem>();
+    List<SelectListItem> listaMeseciDeath = new List<SelectListItem>();
+    for (int i = 0; i < 12; i++)
+    {
+        listaMeseci.Add(new SelectListItem() { Text = meseci[i], Value = (i+1).ToString() });
+        listaMeseciDeath.Add(new SelectListItem() { Text = meseci[i], Value = (i+1).ToString() });
+    }
+
+    List<SelectListItem> listaGodini = new List<SelectListItem>();
+    List<SelectListItem> listaGOdiniDeath = new List<SelectListItem>();
+
+    for (int i = 1000; i < 2000; i++)
+    {
+        listaGodini.Add(new SelectListItem() { Text = i.ToString(), Value = i.ToString() });
+    }
+    for (int i = 1030; i < DateTime.Now.Year; i++)
+    {
+        listaGOdiniDeath.Add(new SelectListItem() { Text = i.ToString(), Value = i.ToString() });
+    }
+}
+
+<h2>Add</h2>
+
+@using (Html.BeginForm())
+{
+    <div class="form-group">
+        <div>@Html.LabelFor(m => m.author.Name)</div>
+        <div>@Html.TextBoxFor(m => m.author.Name, new { @class = "form-control" })</div>
+        <div>@Html.ValidationMessageFor(m => m.author.Name)</div>
+    </div>
+
+    <div class="form-group">
+        <div>@Html.LabelFor(m => m.author.IMGLink)</div>
+        <div>@Html.TextBoxFor(m => m.author.IMGLink, new { @class = "form-control" })</div>
+        <div>@Html.ValidationMessageFor(m => m.author.IMGLink)</div>
+    </div>
+
+    <div class="form-group">
+        <div>@Html.LabelFor(m => m.author.Gender)</div>
+        <div>
+            <label>Male   </label>
+            @Html.RadioButtonFor(m => m.author.Gender, true)
+            <label>Female   </label>
+            @Html.RadioButtonFor(m => m.author.Gender, false)
+        </div>
+        <div>@Html.ValidationMessageFor(m => m.author.Gender)</div>
+    </div>
+
+    <div class="form-group">
+        <div>@Html.LabelFor(m => m.birthDate)</div>
+        <div>@Html.DropDownListFor(m => m.birthDate, listaDen, new { @class = "form-control" })</div>
+        <div>@Html.ValidationMessageFor(m => m.birthDate)</div>
+    </div>
+
+    <div class="form-group">
+        <div>@Html.LabelFor(m => m.birthMonth)</div>
+        <div>@Html.DropDownListFor(m => m.birthMonth, listaMeseci, new { @class = "form-control" })</div>
+        <div>@Html.ValidationMessageFor(m => m.birthMonth)</div>
+    </div>
+
+    <div class="form-group">
+        <div>@Html.LabelFor(m => m.birthYear)</div>
+        <div>@Html.DropDownListFor(m => m.birthYear, listaGodini, new { @class = "form-control" })</div>
+        <div>@Html.ValidationMessageFor(m => m.birthYear)</div>
+    </div>
+
+    <div class="form-group">
+        <div>@Html.LabelFor(m => m.author.isDead)</div>
+        <div>@Html.CheckBoxFor(m => m.author.isDead, new {@checked="checked", @id="checkbox"})<label style="margin-left:0.5%;">The author is deceased</label></div>
+        <div>@Html.ValidationMessageFor(m => m.author.isDead)</div>
+    </div>
+
+    <div id="hide" style="display:none">
+    <div class="form-group">
+        <div>@Html.LabelFor(m => m.deathDate)</div>
+        <div>@Html.DropDownListFor(m => m.deathDate, listDenDeath, new { @class = "form-control", @id="day-list"})</div>
+        <div>@Html.ValidationMessageFor(m => m.deathDate)</div>
+    </div>
+
+    <div class="form-group">
+        <div>@Html.LabelFor(m => m.deathMonth)</div>
+        <div>@Html.DropDownListFor(m => m.deathMonth, listaMeseciDeath, new { @class = "form-control", @id="month-list" })</div>
+        <div>@Html.ValidationMessageFor(m => m.deathMonth)</div>
+    </div>
+
+    <div class="form-group">
+        <div>@Html.LabelFor(m => m.deathYear)</div>
+        <div>@Html.DropDownListFor(m => m.deathYear, listaGOdiniDeath, new { @class = "form-control", @id="year-list" })</div>
+        <div>@Html.ValidationMessageFor(m => m.deathYear)</div>
+    </div>
+    </div>
+
+    <div class="form-group">
+        <div>@Html.LabelFor(m => m.author.Description)</div>
+        <div>@Html.TextAreaFor(m => m.author.Description, new { @class="form-control"})</div>
+        <div>@Html.ValidationMessageFor(m => m.author.Description)</div>
+    </div>
+
+    <input type="submit" value="Create"/>
+}
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryval")
+
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#checkbox").change(function () {
+            $("#hide").toggle();
+        })
+    })
+</script>

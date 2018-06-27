@@ -1,0 +1,59 @@
+﻿@model BookStores.Models.AddBook
+@using BookStores.Models
+
+@{
+    ViewBag.Title = "AddBook";
+}
+
+@{
+    List<SelectListItem> lista = new List<SelectListItem>();
+    foreach (Book book in Model.books)
+    {
+        lista.Add(new SelectListItem() { Text = book.Name, Value = book.Id.ToString() });
+    }
+}
+
+<h2>AddBook</h2>
+
+<div style="width: 40%; float:left; margin-right:10%;">
+    <h2>@Model.store.Name</h2>
+    <img style="width:100%" src="@Url.Content(Model.store.IMGLink)" />
+    <h2>Opened: @Model.store.Opened</h2>
+    <p>@Model.store.Description</p>
+</div>
+
+<div style="width: 50%; float:left;">
+    <br/>
+    <br/>
+    @using (Html.BeginForm())
+    {
+        <div class="form-group">
+            <div>@Html.LabelFor(m => m.link.BookID)</div>
+            <div>@Html.DropDownListFor(m => m.link.BookID, lista, new { @class = "form-control" })</div>
+            <div>@Html.ValidationMessageFor(m => m.link.BookID)</div>
+        </div>
+
+        <div class="form-group">
+            <div>@Html.LabelFor(m => m.link.Price)</div>
+            <div>@Html.TextBoxFor(m => m.link.Price, new { @class = "form-control", type = "number" })</div>
+            <div>@Html.ValidationMessageFor(m => m.link.Price)</div>
+        </div>
+
+        <div style="display:none" class="form-group">
+            <div>@Html.LabelFor(m => m.link.StoreID)</div>
+            <div>@Html.TextBoxFor(m => m.link.StoreID, new { @class = "form-control", type = "number" })</div>
+            <div>@Html.ValidationMessageFor(m => m.link.StoreID)</div>
+        </div>
+
+        <div class="form-group">
+            <div>@Html.LabelFor(m => m.link.InStock)</div>
+            <div>@Html.TextBoxFor(m => m.link.InStock, new { @class = "form-control", type = "number" })</div>
+            <div>@Html.ValidationMessageFor(m => m.link.InStock)</div>
+        </div>
+
+        <input type="submit" value="Add The Book">
+    }
+</div>
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryval")

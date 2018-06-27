@@ -1,0 +1,76 @@
+﻿@model BookStores.Models.NewBook
+@using BookStores.Models
+
+@{
+    ViewBag.Title = "Add";
+}
+
+<h2>Add</h2>
+
+@{
+    List<SelectListItem> items = new List<SelectListItem>();
+    foreach (Author author in Model.authors)
+    {
+        items.Add(new SelectListItem() { Text = author.Name, Value = author.Id.ToString() });
+    }
+    items.Add(new SelectListItem() { Text = "--  Not from the database --", Value = (-1).ToString() });
+}
+
+@using (Html.BeginForm())
+{
+    <div class="form-group">
+        <div>@Html.LabelFor(m => m.book.Name)</div>
+        <div>@Html.TextBoxFor(m => m.book.Name, new { @class = "form-control" })</div>
+        <div>@Html.ValidationMessageFor(m => m.book.Name)</div>
+    </div>
+
+    <div class="form-group">
+        <div>@Html.LabelFor(m => m.book.IMGLink)</div>
+        <div>@Html.TextBoxFor(m => m.book.IMGLink, new { @class = "form-control" })</div>
+        <div>@Html.ValidationMessageFor(m => m.book.IMGLink)</div>
+    </div>
+
+    <div class="form-group">
+        <div>@Html.LabelFor(m => m.book.Description)</div>
+        <div>@Html.TextAreaFor(m => m.book.Description, new { @class = "form-control" })</div>
+        <div>@Html.ValidationMessageFor(m => m.book.Description)</div>
+    </div>
+
+    <div class="form-group">
+        <div>@Html.LabelFor(m => m.book.Released)</div>
+        <div>@Html.TextBoxFor(m => m.book.Released, new { @class = "form-control", type = "number" })</div>
+        <div>@Html.ValidationMessageFor(m => m.book.Released)</div>
+    </div>
+
+    <div class="form-group">
+        <div>@Html.LabelFor(m => m.book.AuthorID)</div>
+        <div>@Html.DropDownListFor(m => m.book.AuthorID, items, new { @class = "form-control", @id="authors" })</div>
+        <div>@Html.ValidationMessageFor(m => m.book.AuthorID)</div>
+    </div>
+
+    <div style="display:none;" id="custom-author" class="form-group">
+        <div>@Html.LabelFor(m => m.book.AuthorName)</div>
+        <div>@Html.TextBoxFor(m => m.book.AuthorName, new { @class = "form-control"})</div>
+        <div>@Html.ValidationMessageFor(m => m.book.AuthorName)</div>
+    </div>
+
+    <input type="submit" value="Create" />
+}
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryval")
+
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#authors").change(function () {
+            if ($(this).val() == -1) {
+                $("#custom-author").show(100);
+            }
+            else {
+                $("#custom-author").hide(100);
+            }
+        })
+    })
+</script>

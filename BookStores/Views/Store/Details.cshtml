@@ -1,0 +1,41 @@
+﻿@model BookStores.Models.StoreDetails
+@using BookStores.Models
+
+@{
+    ViewBag.Title = "Details";
+}
+
+
+<section>
+<div style="width: 45%; float:left">
+    <h2>Details</h2>
+    <h2>@Model.store.Name</h2>
+
+    <img style="width: 100%" src="@Url.Content(Model.store.IMGLink)" />
+
+    <h3>@Model.store.Opened</h3>
+
+    <p style="width:90%">@Model.store.Description</p>
+
+</div>
+
+<div style="width:45%;">
+    <div class="container">
+        @foreach (BookExtended book in Model.books)
+        {
+            <div class="wrap">
+                <h2 class="title">@book.Name</h2>
+                <img class="img" src="@Url.Content(book.IMGLink)" />
+                <div class="likes-dislikes">
+                    <h4 class="author">Available units: @book.InStock</h4>
+                    <h4 class="author">For: @book.Price USD</h4>
+                    @using (Html.BeginForm("BuyBook/"+Model.store.Id+"/"+book.Id, "Store", FormMethod.Get))
+                    {
+                        <input class="button-buy" type="submit" value="Buy" />
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</div>
+</section>

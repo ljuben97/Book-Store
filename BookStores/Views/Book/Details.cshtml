@@ -1,0 +1,59 @@
+﻿@model BookStores.Models.BookDetails
+@using BookStores.Models
+
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<section>
+<div style="width: 45%; float:left;">
+<h2>Details</h2>
+
+<h2>@Model.book.Name</h2>
+
+<img src="@Url.Content(Model.book.IMGLink)" />
+<h3>
+    By: 
+@{
+    if(Model.book.AuthorID==-1)
+    {
+        @Model.book.AuthorName   
+    }
+    else
+    {
+        @Html.ActionLink(Model.author.Name, "Details/"+Model.author.Id, "Author")
+    }
+}
+    </h3>
+    
+<h3>Year released: @Model.book.Released</h3>
+
+       
+
+<p style="width:70%">@Model.book.Description</p>
+
+</div>
+
+<div style="width:45%;">
+    <div class="container">
+        @foreach (StoreExtended storeExt in Model.storesExt)
+        {
+            <div class="wrap">
+                <h2 class="title">@storeExt.store.Name</h2>
+                <img class="img" src="@Url.Content(storeExt.store.IMGLink)" />
+                <div class="likes-dislikes">
+                    <h4 class="author">Available for:</h4>
+                    <h4 class="author">@storeExt.price USD</h4>
+                    @using (Html.BeginForm("BuyBook/"+storeExt.store.Id+"/"+Model.book.Id, "Store", FormMethod.Get))
+                    {
+                        <input class="button-buy" type="submit" value="Buy" />
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</div>
+</section>

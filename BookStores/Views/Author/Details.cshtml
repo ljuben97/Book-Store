@@ -1,0 +1,102 @@
+﻿@model BookStores.Models.AuthorDetails
+@using BookStores.Models
+
+@{
+    ViewBag.Title = "Details";
+}
+
+
+<section>
+<div style="width: 45%; float:left; overflow:hidden;">
+    <h2>Details</h2>
+    <h2>@Model.author.Name</h2>
+
+    <img src="@Url.Content(Model.author.IMGLink)" />
+
+    <h3>Born: @Model.author.Born.ToString().Split(' ')[0]</h3>
+
+    @{
+        DateTime date = DateTime.Now;
+    }
+
+    @if ((bool)Model.author.isDead)
+    {
+        <h3>Died: @Model.author.Died.ToString().Split(' ')[0]</h3>
+        date = (DateTime)Model.author.Died;
+
+    }
+
+    @{
+        bool dali;
+        DateTime born = (DateTime)Model.author.Born;
+        if (date.Month > born.Month)
+        {
+            dali = true;
+        }
+        else if (date.Month < born.Month)
+        {
+            dali = false;
+        }
+        else
+        {
+            if (date.Date > born.Date)
+            {
+                dali = true;
+            }
+            else if (date.Date < born.Date)
+            {
+                dali = false;
+            }
+            else
+            {
+                dali = true;
+            }
+        }
+        int age;
+        if (dali)
+        {
+            age = date.Year - born.Year;
+        }
+        else
+        {
+            age = date.Year - born.Year - 1;
+        }
+    }
+
+    <h3>Age: @age</h3>
+
+    @{
+        if ((bool)Model.author.Gender)
+        {
+            <h3>Gender: Male</h3>
+        }
+        else
+        {
+            <h3>Gender: Female</h3>
+        }
+    }
+
+    <p style="width:70%">@Model.author.Description</p>
+
+</div>
+
+<div style="width:45%; overflow:hidden" >
+    <div class="container">
+        @foreach (Book book in Model.books)
+        {
+            <div class="wrap">
+                <h2 class="title">@book.Name</h2>
+                <img class="img" src="@Url.Content(book.IMGLink)" />
+                <div class="likes-dislikes">
+                    <h4 class="author">Released in:</h4>
+                    <h4 class="author">@book.Released</h4>
+                    @using (Html.BeginForm("Details/"+book.Id, "Book", FormMethod.Get))
+                    {
+                        <input class="button-buy" type="submit" value="Details" />
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</div>
+</section>

@@ -1,0 +1,26 @@
+﻿@model List<BookStores.Models.ListAuthor>
+@using BookStores.Models
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+<h2>@Html.ActionLink("Add an author", "Add", "Author")</h2>
+<div class="container">
+    @foreach (ListAuthor authorIndex in Model)
+    {
+        <div class="wrap">
+            <h2 class="title">@authorIndex.Name</h2>
+            <img class="img" src="@Url.Content(authorIndex.IMGLink)" />
+            <div class="likes-dislikes">
+                <h4 class="author">Books From Author:</h4>
+                <h4 class="author">@authorIndex.BookCounter</h4>
+                @using (Html.BeginForm("Details/"+authorIndex.Id, "Author", FormMethod.Get))
+                {
+                    <input type="submit" value="Details" style="width:90%; margin-left:5%;"/>
+                }
+            </div>
+        </div>
+    }
+</div>

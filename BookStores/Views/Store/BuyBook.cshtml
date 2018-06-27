@@ -1,0 +1,103 @@
+﻿@model BookStores.Models.BookBuy
+
+@{
+    ViewBag.Title = "BuyBook";
+}
+
+<h2>BuyBook</h2>
+
+<section>
+    <div style="width:40%; float:left; display:inline-block;">
+        <h2>@Model.store.Name</h2>
+
+        <img style="width:100%" src="@Url.Content(Model.store.IMGLink)" />
+        <h3>Year Opened: @Model.store.Opened</h3>
+        <p style="width: 90%">@Model.store.Description</p>
+    </div>
+
+    <div style="width:55%; margin-left:5%; display:inline-block;">
+        <h2>@Model.bookExtended.book.Name</h2>
+        <div style="width: 45%; float:left; display:inline-block;";>
+            <br/>
+        <img style="width:100%;" src="@Url.Content(Model.bookExtended.book.IMGLink)" />
+    
+
+        </div>
+        <div style="width: 45%; margin-left:5%; display:inline-block;">
+            <h3>
+                By:
+                @{
+                    if (Model.bookExtended.book.AuthorID == -1)
+                    {
+                        @Model.bookExtended.book.AuthorName
+                    }
+                    else
+                    {
+                        @Html.ActionLink(Model.bookExtended.author.Name, "Details/" + Model.bookExtended.author.Id, "Author")
+                    }
+                }
+            </h3>
+            <h3>Release in: @Model.bookExtended.book.Released</h3>
+            @using (Html.BeginForm())
+            {
+                <h3 id="available">Available Units: @Model.InStock</h3>
+                <h3>Price: @Model.Price USD</h3>
+
+                <div class="form-group">
+                    <div>@Html.LabelFor(m => m.Quantity)</div>
+                    <div>@Html.TextBoxFor(m => m.Quantity, new { @class = "form-control", type = "number", @id="quantity" })</div>
+                    <div>@Html.ValidationMessageFor(m => m.Quantity)</div>
+                </div>
+
+                <h3 id="total">Total price: 0 USD</h3>
+
+                <div style="display:none" class="form-group">
+                    <div>@Html.LabelFor(m => m.bookExtended.book.Id)</div>
+                    <div>@Html.TextBoxFor(m => m.bookExtended.book.Id, new { @class = "form-control", type = "number" })</div>
+                    <div>@Html.ValidationMessageFor(m => m.Quantity)</div>
+                </div>
+
+                <div style="display:none" class="form-group">
+                    <div>@Html.LabelFor(m => m.store.Id)</div>
+                    <div>@Html.TextBoxFor(m => m.store.Id, new { @class = "form-control", type = "number" })</div>
+                    <div>@Html.ValidationMessageFor(m => m.Quantity)</div>
+                </div>
+
+                <input type="submit" id="submit" value="Buy Book" />
+            }
+        </div>
+    </div>
+</section>
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryval")
+
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#quantity").on('input', function () {
+            var quantity = $("#quantity").val();
+            if (quantity < 0) {
+                $("#available").css("color", "red");
+                $("#available").html("Don't put a negative number!");
+                $("#submit").prop('disabled', true);
+            }
+            else {
+                var price =@Model.Price;
+                var available =@Model.InStock-quantity;
+                $("#total").html("Total price: " + quantity * price + " USD");
+                if (available >= 0) {
+                    $("#available").css("color", "black");
+                    $("#available").html("Available Units: " + available);
+                    $("#submit").prop('disabled', false);
+                }
+                else {
+                    $("#available").css("color", "red");
+                    $("#available").html("Not enough units available!");
+                    $("#submit").prop('disabled', true);
+                }
+            }
+        })
+    })
+</script>

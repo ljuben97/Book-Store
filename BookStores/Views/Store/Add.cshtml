@@ -1,0 +1,39 @@
+﻿@model BookStores.Models.Store
+
+@{
+    ViewBag.Title = "Add";
+}
+
+<h2>Add</h2>
+
+@using (Html.BeginForm())
+{
+    <div class="form-group">
+        <div>@Html.LabelFor(m => m.Name)</div>
+        <div>@Html.TextBoxFor(m => m.Name, new { @class = "form-control" })</div>
+        <div>@Html.ValidationMessageFor(m => m.Name)</div>
+    </div>
+
+    <div class="form-group">
+        <div>@Html.LabelFor(m => m.IMGLink)</div>
+        <div>@Html.TextBoxFor(m => m.IMGLink, new { @class = "form-control" })</div>
+        <div>@Html.ValidationMessageFor(m => m.IMGLink)</div>
+    </div>
+
+    <div class="form-group">
+        <div>@Html.LabelFor(m => m.Opened)</div>
+        <div>@Html.TextBoxFor(m => m.Opened, new { @class = "form-control", type = "number" })</div>
+        <div>@Html.ValidationMessageFor(m => m.Opened)</div>
+    </div>
+
+    <div class="form-group">
+        <div>@Html.LabelFor(m => m.Description)</div>
+        <div>@Html.TextAreaFor(m => m.Description, new { @class = "form-control" })</div>
+        <div>@Html.ValidationMessageFor(m => m.Description)</div>
+    </div>
+
+    <input type="submit" value="Create" />
+}
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryval")

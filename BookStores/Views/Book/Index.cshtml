@@ -1,0 +1,45 @@
+﻿@model List<BookStores.Models.BookIndex>
+@using BookStores.Models
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<link href="~/Content/Display.css" rel="stylesheet" />
+
+@section Styles
+{
+    <link href="@Url.Content("~/Content/Display.css")" rel="stylesheet" type="text/css" />
+}
+
+<h2>Index</h2>
+<h2>@Html.ActionLink("Add a book", "Add", "Book")</h2>
+<div class="container">
+                @for (int counter = 0; counter < Model.Count; counter++)
+                {
+                    <section class="wrap">
+                        <h2 class="title">@Model.ElementAt(counter).book.Name</h2>
+                        <img class="img" src="@Url.Content(Model.ElementAt(counter).book.IMGLink)" />
+                        <div class="likes-dislikes">
+                            <h4 class="author">By:</h4>
+                            @{
+                                if (Model.ElementAt(counter).book.AuthorID == -1)
+                                {
+                                    <h4 class="author">@Model.ElementAt(counter).book.AuthorName</h4>
+                                }
+                                else
+                                {
+                                    <h4 class="author">@Html.ActionLink(Model.ElementAt(counter).author.Name, "Details/" + Model.ElementAt(counter).author.Id, "Author")</h4>
+                                }
+                            }
+                            @using (Html.BeginForm("Details/" + Model.ElementAt(counter).book.Id, "Book", FormMethod.Get))
+                            {
+                                <input class="button-buy" type="submit" value="Details" />
+                            }
+                        </div>
+                    </section>
+                }
+    
+</div>
+
+
