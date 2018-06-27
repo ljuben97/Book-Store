@@ -1,8 +1,8 @@
-#Book Stores-A Simple MVC Project
+# Book Stores-A Simple MVC Project
 
 This is a simple Web Project I've created using the MVC framework for demonstration purposes.
 
-##Main controllers and actions
+## Main controllers and actions
 
 The project has three controllers that control separate sections:
 
@@ -16,7 +16,7 @@ Each have three separate Actions:
 - Details
 - Index
 
-###Add
+### Add
 
 The Add action takes you to a web form that allows you to add a new Item(Author, Book, Store) to the database (A Local SQL Database that's connected using entity framework).
 
@@ -35,7 +35,7 @@ Also each form item has it's on validation that's created using the Validation D
 ![alt text](https://raw.githubusercontent.com/ljuben97/Book-Store/master/Images/AddAuthor.PNG)
 
 
-###Details
+### Details
 
 The details action consists of all the information of a specific book, author and details.
 
@@ -47,20 +47,20 @@ Inside the details of a Store along with the store's full details you can also s
 
 ![alt text](https://raw.githubusercontent.com/ljuben97/Book-Store/master/Images/StoreDetails.PNG)
 
-###Index
+### Index
 
 The index action displays all the books, authors and stores displayed in a stylized fashion. Every item holds information abou it's title the image and further info depending on the type of item. Also every item holds a "Details" button that takes the user to the details section of the specified item.
 
 ![alt text](https://raw.githubusercontent.com/ljuben97/Book-Store/master/Images/BookDetailsPNG.PNG)
 
-##Extra actions for the Store Controller
+## Extra actions for the Store Controller
 
 The store controller holds extra action including:
 
 - Add a Book
 - Buy a Book
 
-###Add a Book
+### Add a Book
 
 The add a book action takes the user to add a book to the specific store. The view for this action displays the store's information and generates a form that holds a drop-down list of all the books available a text field for the selected book's price and another text field for the number of books to add in the store. 
 
@@ -68,7 +68,7 @@ Once submitted the Post Action connects the book to the store by creating a link
 
 ![alt text](https://raw.githubusercontent.com/ljuben97/Book-Store/master/Images/AddBook.PNG)
 
-###Buy a Book
+### Buy a Book
 
 The buy a book action takes the user to the buy a book section for the specific's store. It displays the store's details, the book's details and a simple form that has a textfield for the number of book's the user likes to buy. 
 
@@ -110,6 +110,6 @@ Here is the code for the JQuery script:
 </script>
 ```
 
-##Future plans
+## Future plans
 
 I sincerelly hope you like this project. For the furutre I plan on adding a fully-functioning authentication and authorization system, Edit and Delete actions for all the controllers and polish up the css to make it look more clean and moder
